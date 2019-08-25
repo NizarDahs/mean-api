@@ -3,11 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//importation mongoose
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var platRouter = require('./routes/plats');
+
 var app = express();
+//connection base de donnees
+mongoose.connect('mongodb://localhost:27017/mean-db');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/plats', platRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
