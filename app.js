@@ -8,8 +8,10 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+/* declaration les router du database */
 var platRouter = require('./routes/plats');
+var RestaurantRouter = require('./routes/restaurants');
+
 
 var app = express();
 //connection base de donnees
@@ -29,6 +31,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/plats', platRouter);
+app.use('/restaurants', RestaurantRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
