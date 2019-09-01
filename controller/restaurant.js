@@ -2,14 +2,17 @@ var Restaurant = require('../models/restaurants');
 
 
 exports.getAllRestaurants = function (req, res) {
-    Restaurent.find({}, (err, data) => {
+    Restaurant.find({}, (err, data) => {
+        /* tester existance de restaurants pour les affiche */
         if (err) {
             res.status(500).json({
                 sucess: false,
                 error: err
 
             })
-        } else {
+        }
+        /* le test d'existance des restaurants et les affiche  */
+        else {
             res.status(200).json({
                 sucess: true,
                 restaurents: data
@@ -20,8 +23,9 @@ exports.getAllRestaurants = function (req, res) {
     });
 }
 
-
+/* ajouter nouveau restaurant */
 exports.AddRestaurant = function (req, res) {
+    /* reservation un reastaurant pour les stock la suivante */
     var restautent = new Restaurant({
         nom: req.body.nom,
         position: {
@@ -29,17 +33,19 @@ exports.AddRestaurant = function (req, res) {
             long: req.body.long
         },
         image: req.body.image,
-        plats: [req.body.Plat]
+        plats: req.body.plats
     })
     restautent.save(function (err) {
-        
+        /* s il le sauvgarde impossible maitre l'erreur 500 */
         if (err) {
             res.status(500).json({
                 success: false,
                 error: 'cant add restaurant to database',
                 err: err
             })
-        } else {
+        }
+        /* le sauvgarde tous juste */
+        else {
             res.status(200).json({
                 success: true,
                 new: restautent
@@ -48,16 +54,17 @@ exports.AddRestaurant = function (req, res) {
     });
 }
 
-
+/* affichage un seul restaurant par son id */
 exports.getRestautantById = function (req, res) {
     Restaurant.findById(req.params.id, (err, data) => {
         if (err) {
             res.status(500).json({
                 success: false,
                 error: err,
-                message: 'can not access database'
+                message: 'cannot connct database'
             })
         }
+        /* ce restaurant existe et l'affiche */
         else {
             if (data) {
                 res.status(200).json({
@@ -67,10 +74,12 @@ exports.getRestautantById = function (req, res) {
 
 
             }
+            /* si le restaurant n'existe nous affiche le message d'erreur 500 */
+
             else {
                 res.status(404).json({
                     success: false,
-                    message: 'database not found',
+                    message: 'this restaurant is not in database',
                     restautent: data
                 })
             }
