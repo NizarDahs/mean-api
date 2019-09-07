@@ -18,7 +18,13 @@ var platRouter = require('./routes/plats');
 var RestaurantRouter = require('./routes/restaurants');
 
 
+// ajouter fonction pour conncter avec expressJs
+
+var cors = require('cors')
+
 var app = express();
+// ajouter fonction pour conncter avec expressJs
+app.use(cors())
 //connection base de donnees
 mongoose.connect('mongodb://localhost:27017/mean-db');
 
@@ -42,12 +48,12 @@ app.use('/restaurants', RestaurantRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
