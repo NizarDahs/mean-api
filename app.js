@@ -26,7 +26,7 @@ var app = express();
 // ajouter fonction pour conncter avec expressJs
 app.use(cors())
 //connection base de donnees
-mongoose.connect('mongodb://localhost:27017/mean-db');
+mongoose.connect('mongodb://localhost:27017/mean-db', { useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
